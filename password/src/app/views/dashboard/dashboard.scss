@@ -1,0 +1,138 @@
+/* Reset e base */
+body {
+  margin: 0;
+  background: #f1f3f6;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1e2772;
+}
+
+.btn-logout {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #fd7401;
+  background-color: transparent;
+  color: #fd7401;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+  background-color: #fd7401;
+  color: #fff;
+}
+
+.btn-logout:active {
+  transform: scale(0.98);
+}
+
+/* Conteúdo principal */
+.main-content {
+  width: 100%;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px;
+  background: #fff;
+  border-radius: 20px;
+  //box-shadow: 0 0 80px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.titulo {
+  font-size: 26px;
+  font-weight: 600;
+  color: #1e2772;
+  margin-bottom: 30px;
+  text-align: center;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabela */
+.tabela-container {
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.tabela-senhas {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tabela-senhas th {
+  background-color: #f1f3f6;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e2772;
+  padding: 12px;
+  border-bottom: 2px solid #e4e4e4;
+}
+
+.tabela-senhas td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e4e4e4;
+  font-size: 15px;
+  color: #333;
+}
+
+.tabela-senhas tr:hover {
+  background-color: #fafafa;
+}
+
+/* Ícones */
+.icon {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+/* Botão registrar */
+.registrar-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-registrar {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid #fd7401;
+  background-color: transparent;
+  color: #fd7401;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  //box-shadow: 0px 6px 12px rgba(253, 116, 1, 0.2);
+}
+
+.btn-registrar:hover {
+  background-color: #fd7401;
+  color: #fff;
+}
+
+.btn-registrar:active {
+  transform: scale(0.98);
+}

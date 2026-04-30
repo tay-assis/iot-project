@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Fonte e CSS -->
+  <link rel="stylesheet" href="./cadastro-1.scss">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+
+  <title>Registro</title>
+</head>
+<body>
+  <main class="cadastro-container">
+
+    <!-- Cabeçalho -->
+    <header class="cadastro-header">
+      <h1 class="cadastro-titulo">Registro</h1>
+      <p class="cadastro-subtitulo">
+        Já possui uma conta? 
+        <a href="#" class="cadastro-link">Entre aqui</a>
+      </p>
+    </header>
+
+    <!-- Formulário -->
+    <section class="cadastro-form-section">
+      <form class="form-cadastro">
+
+        <!-- Nome completo -->
+        <div class="form-group">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Endereço de e-mail</label>
+          <input type="email" id="email" name="email" placeholder="alex@email.com" required>
+        </div>
+
+        <!-- Senha -->
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+        </div>
+
+        <!-- Confirmar senha -->
+        <div class="form-group">
+          <label for="confirmar-senha">Repita a senha</label>
+          <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Repita sua senha" required>
+        </div>
+
+        <!-- Ações -->
+        <div class="form-actions">
+          <button type="submit" class="btn-login">Registrar</button>
+        </div>
+      </form>
+    </section>
+
+  </main>
+</body>
+</html>
