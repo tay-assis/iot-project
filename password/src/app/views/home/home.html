@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="./home.scss">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  
+  <title>Login - Password Network</title>
+</head>
+<body>
+  <div class="login-container">
+
+    <!-- Título -->
+    <h1 class="login-titulo">
+      <span>Password</span><br>
+      <span>Network</span>
+    </h1>
+
+    <!-- Formulário -->
+    <form class="form-login">
+      
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+      </div>
+
+      <!-- Senha -->
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+      </div>
+
+      <!-- Botão login -->
+      <button type="submit" class="btn-login">Clique para logar</button>
+
+		<!-- Separador -->
+		<div class="separator">
+			<span>OR</span>
+		</div>
+
+      <!-- Botão registro -->
+      <button type="button" class="btn-registrar">Registrar-se</button>
+    </form>
+
+  </div>
+</body>
+</html>

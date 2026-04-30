@@ -1,0 +1,122 @@
+/* Centralização da tela */
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f1f3f6;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+}
+
+/* Container principal */
+.cadastro-container {
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 50px 40px;
+  // box-shadow: 0 0 80px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Cabeçalho */
+.cadastro-header {
+  margin-bottom: 30px;
+}
+
+.cadastro-titulo {
+  font-size: 32px;
+  font-weight: 600;
+  color: #1e2772;
+  margin: 0;
+  line-height: 1.2;
+  // text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cadastro-subtitulo {
+  font-size: 15px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.cadastro-link {
+  color: #fd7401;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cadastro-link:hover {
+  color: #e56400;
+  text-decoration: underline;
+}
+
+/* Seção do formulário */
+.cadastro-form-section {
+  text-align: left;
+}
+
+/* Formulário */
+.form-cadastro {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Grupos de campos */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input {
+  height: 50px;
+  padding: 0 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #e4e4e4;
+  background-color: #f1f3f6;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #fd7401;
+}
+
+/* Ações do formulário */
+.form-actions {
+  margin-top: 20px;
+}
+
+/* Botão principal */
+.btn-login {
+  width: 100%;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  background-color: #fd7401;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  // box-shadow: 0px 12px 24px rgba(253, 116, 1, 0.3);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-login:hover {
+  background-color: #e56400;
+}
+
+.btn-login:active {
+  transform: scale(0.98);
+}
