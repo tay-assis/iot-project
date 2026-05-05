@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UiBoxComponent } from '../../../../components/ui-box/ui-box';
-import { UiInputComponent } from '../../../../components/ui-text-input/ui-text-input';
 import { UiSelectComponent } from '../../../../components/ui-select/ui-select';
 
 @Component({
   selector: 'app-create',
-  imports: [UiBoxComponent,UiInputComponent,UiSelectComponent],
+  imports: [UiBoxComponent,UiSelectComponent],
   templateUrl: './create.html',
   styleUrl: './create.scss',
 })

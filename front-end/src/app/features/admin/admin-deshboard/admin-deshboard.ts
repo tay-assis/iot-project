@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { UiBoxComponent } from '../../../components/ui-box/ui-box';
-import { UiInputComponent } from '../../../components/ui-text-input/ui-text-input';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -9,8 +8,7 @@ import { Router } from '@angular/router';
   selector: 'app-admin-deshboard',
     imports: [
     CommonModule,
-    UiBoxComponent,
-    UiInputComponent,
+    UiBoxComponent
   ],
   templateUrl: './admin-deshboard.html',
   styleUrl: './admin-deshboard.scss',

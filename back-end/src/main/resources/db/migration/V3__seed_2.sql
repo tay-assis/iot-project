@@ -9,7 +9,7 @@ INSERT INTO classes (name, professor_id)
 VALUES
     (
         'Engenharia de Software',
-        (SELECT id FROM professors WHERE email = 'professor@smartfrequency.com')
+        (SELECT id FROM users WHERE email = 'professor@smartfrequency.com')
     );
 
 

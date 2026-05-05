@@ -1,8 +1,6 @@
 import { Component,OnInit  } from '@angular/core';
 import { UiBoxComponent } from '../../../components/ui-box/ui-box';
-import { UiInputComponent } from '../../../components/ui-text-input/ui-text-input';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { ClassService } from '../../../core/services/class';
 import { ClassModel } from '../../../core/models/class.model';
 import { ChangeDetectorRef } from '@angular/core';
@@ -12,8 +10,7 @@ import { SessionService } from '../../../core/services/session';
   selector: 'app-dashboard',
   imports: [
     CommonModule,
-    UiBoxComponent,
-    UiInputComponent,
+    UiBoxComponent
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
