@@ -1,0 +1,15 @@
+<app-ui-box title="Cadastro de Aluno">
+
+  <app-ui-input
+    label="Nome"
+    (valueChange)="nome = $event"
+  ></app-ui-input>
+
+  <app-ui-input
+    label="Email"
+    (valueChange)="email = $event"
+  ></app-ui-input>
+
+  <button (click)="submit()">Salvar</button>
+
+</app-ui-box>

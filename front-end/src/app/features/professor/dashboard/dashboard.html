@@ -1,0 +1,24 @@
+<div class="container">
+
+  <p *ngIf="loading">Carregando classes...</p>
+
+  <app-ui-box
+    *ngFor="let classe of classes"
+    [title]="classe.name">
+    <p>
+      Status:
+      <strong>
+        {{ classe.active ? 'Aula em andamento' : 'Parada' }}
+      </strong>
+    </p>
+
+    <button
+      (click)="toggleClass(classe)"
+      [ngClass]="classe.active ? 'end' : 'start'"
+    >
+      {{ classe.active ? 'Encerrar Aula' : 'Iniciar Aula' }}
+    </button>
+
+  </app-ui-box>
+
+</div>

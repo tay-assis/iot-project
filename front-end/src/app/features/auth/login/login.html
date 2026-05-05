@@ -1,0 +1,18 @@
+<app-ui-box title="Login">
+
+  <app-ui-input
+    label="Email"
+    (valueChange)="email = $event"
+  ></app-ui-input>
+
+  <app-ui-input
+    label="Senha"
+    type="password"
+    (valueChange)="password = $event"
+  ></app-ui-input>
+
+  <button (click)="submit()">Entrar</button>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+
+</app-ui-box>
