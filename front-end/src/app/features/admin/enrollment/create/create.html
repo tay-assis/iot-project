@@ -1,0 +1,21 @@
+<app-ui-box title="Matricular Aluno">
+
+  <app-ui-select
+    label="Aluno"
+    [options]="alunos"
+    displayKey="name"
+    valueKey="id"
+    (valueChange)="alunoId = +$event"
+  ></app-ui-select>
+
+  <app-ui-select
+    label="Classe"
+    [options]="classes"
+    displayKey="name"
+    valueKey="id"
+    (valueChange)="classeId = +$event"
+  ></app-ui-select>
+
+  <button (click)="submit()">Matricular</button>
+
+</app-ui-box>

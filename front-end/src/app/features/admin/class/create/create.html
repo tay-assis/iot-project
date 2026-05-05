@@ -1,0 +1,19 @@
+
+<app-ui-box title="Cadastro de Classe">
+
+  <app-ui-input
+    label="Nome da Classe"
+    (valueChange)="nome = $event"
+  ></app-ui-input>
+
+  <app-ui-select
+    label="Professor"
+    [options]="professores"
+    displayKey="name"
+    valueKey="id"
+    (valueChange)="professorId = +$event"
+  ></app-ui-select>
+
+  <button (click)="submit()">Salvar</button>
+
+</app-ui-box>

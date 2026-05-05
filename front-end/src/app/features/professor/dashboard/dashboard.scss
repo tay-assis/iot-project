@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button.start {
+  background: #22c55e;
+  color: white;
+}
+
+button.end {
+  background: #ef4444;
+  color: white;
+}

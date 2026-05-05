@@ -1,0 +1,50 @@
+
+services:
+  smart-frequency:
+    build: ./back-end
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./back-end:/app  # Mapeia o código local para o container
+      - /app/target  # Ignora a pasta de build
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/smart_frequency_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+  smart-frequency-professor-client:
+    build: ./front-end
+    ports:
+      - "4200:4200"
+    volumes:
+     - ./front-end:/app
+     - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - smart-frequency
+    networks:
+      - app-network
+  database:
+    image: postgres:15.0
+    environment:
+      POSTGRES_DB: smart_frequency_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  pgdata:
+
+networks:
+  app-network:
+    driver: bridge
