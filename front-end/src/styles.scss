@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Poppins Font */
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Global Reset and Base Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #f5f6fa;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Centered Layout Helper */
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
