@@ -1,5 +1,6 @@
 package com.smartfrequency.config;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.smartfrequency.repository.AdminRepository;
 import com.smartfrequency.repository.ProfessorRepository;
 import com.smartfrequency.repository.UserRepository;
@@ -28,16 +29,23 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var token = recoverToken(request);
+        try {
+            var token = recoverToken(request);
 
-        if (token != null) {
-            var subject = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByEmail(subject);
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            if (token != null) {
+                var subject = tokenService.validateToken(token);
+
+                if (subject != null) {
+                    UserDetails user = userRepository.findByEmail(subject);
+                    var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
+
+        } catch (JWTVerificationException e) {
+            System.out.println("erro no filtro de token");
         }
         filterChain.doFilter(request, response);
-
     }
 
     private String recoverToken(HttpServletRequest request) {
