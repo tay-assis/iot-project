@@ -2,12 +2,16 @@
 
   <app-ui-input
     label="Nome"
-    (valueChange)="nome = $event"
+    (valueChange)="student.name = $event"
   ></app-ui-input>
 
   <app-ui-input
-    label="Email"
-    (valueChange)="email = $event"
+    label="RA"
+    (valueChange)="student.registrationNumber = $event"
+  ></app-ui-input>
+  <app-ui-input
+    label="numero da digital"
+    (valueChange)="student.fingerprintId = $event"
   ></app-ui-input>
 
   <button (click)="submit()">Salvar</button>
