@@ -1,0 +1,96 @@
+<div class="session-container">
+
+  <header class="session-header">
+
+    <div class="class-title">
+      {{ className }}
+    </div>
+
+    <button
+      class="session-button"
+      [class.end-button]="sessionActive"
+      (click)="sessionActive ? endSession() : startSession()"
+    >
+      {{ sessionActive ? 'Encerrar Aula' : 'Iniciar Aula' }}
+    </button>
+
+  </header>
+
+
+  <div class="students-section">
+
+    <h2>Alunos da turma</h2>
+
+    <div
+      class="student-row"
+      *ngFor="let student of students"
+    >
+      <span>
+        {{ student.name }}
+      </span>
+
+      <span
+        class="status-badge"
+        [class.present]="student.present"
+        [class.absent]="!student.present"
+      >
+        {{ student.present ? 'Presente' : 'Ausente' }}
+      </span>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Modal -->
+<div
+  class="modal-overlay"
+  *ngIf="showAttendanceModal"
+>
+
+  <div class="attendance-modal">
+
+    <h2>Concluir chamada</h2>
+
+    <div
+      class="attendance-row"
+      *ngFor="let student of students"
+      [class.present-row]="isPresent(student)"
+      [class.absent-row]="!isPresent(student)"
+    >
+
+      <div class="student-name">
+        {{ student.name }}
+      </div>
+
+      <div>
+
+        <span *ngIf="student.present || student.manualPresence">
+          Presente
+        </span>
+
+        <button
+          *ngIf="!student.present"
+          class="presence-button"
+          (click)="toggleManualPresence(student)"
+        >
+          {{ student.manualPresence
+            ? 'Remover presença'
+            : 'Marcar presente' }}
+        </button>
+
+      </div>
+
+    </div>
+
+    <button
+      class="finish-button"
+      (click)="concludeAttendance()"
+    >
+      Concluir chamada
+    </button>
+
+  </div>
+
+</div>

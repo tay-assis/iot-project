@@ -113,11 +113,21 @@ public class AttendanceController {
 
         for (Student student : students) {
 
-            if (map.containsKey(student.getId())) {
-                result.add(new AttendanceResponse(student.getId(),session.getId(),map.get(student.getId()).getStatus()));
-            } else {
-                result.add(new AttendanceResponse(student.getId(),session.getId(),AttendanceStatus.ABSENT));
-            }
+            Attendance attendance = map.get(student.getId());
+
+            AttendanceStatus status =
+                    attendance != null
+                            ? attendance.getStatus()
+                            : AttendanceStatus.ABSENT;
+
+            result.add(
+                    new AttendanceResponse(
+                            student.getId(),
+                            student.getName(),
+                            session.getId(),
+                            status
+                    )
+            );
         }
         return ResponseEntity.ok(result);
     }
