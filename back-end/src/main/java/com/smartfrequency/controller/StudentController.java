@@ -1,5 +1,6 @@
 package com.smartfrequency.controller;
 
+import com.smartfrequency.model.Professor;
 import com.smartfrequency.model.Student;
 import com.smartfrequency.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,10 @@ public class StudentController {
         if (!studentRepository.existsById(id)) return ResponseEntity.notFound().build();
         studentRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Student>> getAll() {
+        return ResponseEntity.ok(studentRepository.findAll());
     }
 }

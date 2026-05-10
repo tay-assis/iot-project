@@ -16,4 +16,10 @@ export class StudentService {
       student
     );
   }
+
+  getAll(): Observable<StudentModel[]> {
+    return this.http.get<StudentModel[]>(
+      `${this.apiUrl}/getAll`
+    );
+  }
 }

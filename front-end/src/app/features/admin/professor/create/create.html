@@ -2,12 +2,18 @@
 
   <app-ui-input
     label="Nome"
-    (valueChange)="nome = $event"
+    (valueChange)="professor.name = $event"
   ></app-ui-input>
 
   <app-ui-input
     label="Email"
-    (valueChange)="email = $event"
+    (valueChange)="professor.email = $event"
+  ></app-ui-input>
+
+  <app-ui-input
+    label="Senha"
+    (valueChange)="professor.password = $event"
+    type ="password"
   ></app-ui-input>
 
   <button (click)="submit()">Salvar</button>
