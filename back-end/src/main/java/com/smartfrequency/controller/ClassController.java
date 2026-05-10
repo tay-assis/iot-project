@@ -1,5 +1,6 @@
 package com.smartfrequency.controller;
 
+import com.smartfrequency.dto.ClassRegisterRequestDTO;
 import com.smartfrequency.dto.ClassResponseDTO;
 import com.smartfrequency.model.ClassEntity;
 
@@ -30,15 +31,14 @@ public class ClassController {
     @Autowired
     private TokenService tokenService;
 
-    @PostMapping
-    public ResponseEntity<ClassEntity> create(@RequestBody ClassEntity classEntity) {
-        return ResponseEntity.ok(classRepository.save(classEntity));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ClassEntity>> all() {
-
-        return ResponseEntity.ok(classRepository.findAll());
+    @PostMapping("/create")
+    public ResponseEntity<ClassResponseDTO> create(@RequestBody ClassRegisterRequestDTO classRegisterRequestDTO) {
+        Professor professor = professorRepository.getReferenceById(classRegisterRequestDTO.professorId());
+        ClassEntity classEntity = new ClassEntity();
+        classEntity.setName(classRegisterRequestDTO.name());
+        classEntity.setProfessor(professor);
+        classRepository.save(classEntity);
+        return ResponseEntity.ok(new ClassResponseDTO(classEntity.getId(),classEntity.getName()));
     }
     @GetMapping("/professor/classes")
     public ResponseEntity<List<ClassResponseDTO>> getByProfessor(@RequestHeader("Authorization") String authorization) {
@@ -55,4 +55,9 @@ public class ClassController {
         System.out.println(response.get(0).name());
         return ResponseEntity.ok(response);
     }
+
+        @GetMapping("/getAll")
+        public ResponseEntity<List<ClassEntity>> getAll() {
+            return ResponseEntity.ok(classRepository.findAll());
+        }
 }

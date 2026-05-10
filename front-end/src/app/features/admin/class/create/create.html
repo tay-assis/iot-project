@@ -3,15 +3,15 @@
 
   <app-ui-input
     label="Nome da Classe"
-    (valueChange)="nome = $event"
+    (valueChange)="newClass.name = $event"
   ></app-ui-input>
 
   <app-ui-select
     label="Professor"
-    [options]="professores"
+    [options]="professors"
     displayKey="name"
     valueKey="id"
-    (valueChange)="professorId = +$event"
+    (valueChange)="newClass.professorId = +$event"
   ></app-ui-select>
 
   <button (click)="submit()">Salvar</button>

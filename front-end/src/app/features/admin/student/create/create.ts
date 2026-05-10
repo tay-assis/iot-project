@@ -3,6 +3,8 @@ import { UiBoxComponent } from '../../../../components/ui-box/ui-box';
 import { UiInputComponent } from '../../../../components/ui-text-input/ui-text-input';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { StudentModel } from '../../../../core/models/student.model';
+import { StudentService } from '../../../../core/services/student';
 
 @Component({
   selector: 'app-create',
@@ -13,16 +15,24 @@ import { Router } from '@angular/router';
 })
 export class Create {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private studentService:StudentService) {}
 
-  nome = '';
-  email = '';
+  student: StudentModel = {
+    name : '',
+    registrationNumber : '',
+    fingerprintId : ''
+  }
+
 
   submit() {
     console.log({
-      nome: this.nome,
-      email: this.email
+      name: this.student.name,
+      registrationNumber: this.student.registrationNumber,
+      fingerprintId: this.student.fingerprintId
     });
+    this.studentService.createStudent(this.student).subscribe(response => {
+    console.log(response);
+  });
     this.router.navigate(['/admin']);
   }
 }
