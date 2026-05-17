@@ -1,0 +1,104 @@
+<div class="session-container">
+
+  <header class="session-header">
+
+    <div class="class-title">
+      {{ classData.name }}
+    </div>
+
+    <button
+  class="session-button"
+  [class.end-button]="classData.active"
+  (click)="classData.active ? endSession() : startSession()"
+>
+  {{
+    classData.active
+      ? 'Encerrar Aula'
+      : 'Iniciar Aula'
+  }}
+</button>
+
+  </header>
+
+  <div class="students-section">
+
+    <h2>Alunos da turma</h2>
+
+    <div
+      class="student-row"
+      *ngFor="let student of students"
+    >
+
+      <span>
+        {{ student.studentName }}
+      </span>
+
+      <span
+        *ngIf="classData.active"
+        class="status-badge"
+        [class.present]="student.status === 'PRESENT'"
+        [class.absent]="student.status !== 'PRESENT'"
+      >
+        {{
+          student.status === 'PRESENT'
+            ? 'Presente'
+            : 'Ausente'
+        }}
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Modal -->
+<div
+  class="modal-overlay"
+  *ngIf="showAttendanceModal"
+>
+
+  <div class="attendance-modal">
+
+    <h2>Concluir chamada</h2>
+
+    <div
+      class="attendance-row"
+      *ngFor="let student of students"
+      [class.present-row]="student.status === 'PRESENT'"
+      [class.absent-row]="student.status !== 'PRESENT'"
+    >
+
+      <div class="student-name">
+        {{ student.studentName }}
+      </div>
+
+      <div>
+
+        <span *ngIf="student.status === 'PRESENT'">
+          Presente
+        </span>
+
+        <button
+          *ngIf="student.status !== 'PRESENT'"
+          class="presence-button"
+          (click)="toggleManualPresence(student)"
+        >
+          Marcar presente
+        </button>
+
+      </div>
+
+    </div>
+
+    <button
+      class="finish-button"
+      (click)="concludeAttendance()"
+    >
+      Concluir chamada
+    </button>
+
+  </div>
+
+</div>

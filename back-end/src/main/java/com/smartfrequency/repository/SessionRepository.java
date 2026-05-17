@@ -9,4 +9,7 @@ import java.util.Optional;
 public interface SessionRepository extends JpaRepository<Session, Long> {
     Optional<Session> findByStatus(SessionStatus status);
     Optional<Session> findTopByClazzAndStatusOrderByStartTimeDesc(ClassEntity clazz, SessionStatus status);
+    boolean existsByClazzIdAndStatus(Long classId, SessionStatus status);
+    Optional<Session> findByClazz_IdAndStatus(Long classId, SessionStatus status
+    );
 }

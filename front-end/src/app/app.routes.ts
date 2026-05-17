@@ -48,5 +48,11 @@ export const routes: Routes = [
       import('./features/professor/dashboard/dashboard')
         .then(m => m.Dashboard)
   },
+  {
+  path: 'professor/session/:classId',
+    loadComponent: () =>
+      import('./features/professor/session/session')
+        .then(m => m.Session)
+  },
   
 ];

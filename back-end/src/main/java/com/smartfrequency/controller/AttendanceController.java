@@ -2,6 +2,8 @@ package com.smartfrequency.controller;
 
 import com.smartfrequency.dto.AttendanceRequest;
 import com.smartfrequency.dto.AttendanceResponse;
+import com.smartfrequency.dto.AttendanceResponseDTO;
+import com.smartfrequency.dto.UpdateAttendanceRequestDTO;
 import com.smartfrequency.model.*;
 import com.smartfrequency.repository.AttendanceRepository;
 import com.smartfrequency.repository.EnrollmentRepository;
@@ -18,6 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/attendance")
 public class AttendanceController {
@@ -81,27 +84,80 @@ public class AttendanceController {
     }
 
     // Professor pode editar manualmente
-    @PutMapping
-    public ResponseEntity<Attendance> updateAttendance(@RequestBody Attendance attendance) {
+    @PostMapping
+    public ResponseEntity<AttendanceResponseDTO> createAttendance(
+            @RequestBody UpdateAttendanceRequestDTO request
+    ) {
+
+        Student student = studentRepository
+                .getReferenceById(request.studentId());
+
+        Session session = sessionRepository
+                .getReferenceById(request.sessionId());
+
+        Attendance attendance = new Attendance();
+
+        attendance.setStudent(student);
+        attendance.setSession(session);
+        attendance.setStatus(request.status());
         attendance.setMethod(AttendanceMethod.MANUAL);
-        return ResponseEntity.ok(attendanceRepository.save(attendance));
+
+        Attendance saved =
+                attendanceRepository.save(attendance);
+
+        return ResponseEntity.ok(
+                new AttendanceResponseDTO(
+                        saved.getStudent().getId(),
+                        saved.getSession().getId(),
+                        saved.getStatus()
+                )
+        );
     }
-
     // 📊 Listar presença da sessão (para dashboard)
-    @GetMapping("/session")
-    public ResponseEntity<List<AttendanceResponse>> getSessionAttendance() {
-
-        Session session = sessionRepository.findByStatus(SessionStatus.OPEN)
-                .orElseThrow(() -> new RuntimeException("Session not found"));
+    @GetMapping("/session/{classId}")
+    public ResponseEntity<List<AttendanceResponse>> getSessionAttendance(
+            @PathVariable Long classId
+    ) {
 
         List<Student> students = enrollmentRepository
-                .findByClazz_Id(session.getClazz().getId())
+                .findByClazz_Id(classId)
                 .stream()
                 .map(Enrollment::getStudent)
                 .toList();
 
-        List<Attendance> attendances = attendanceRepository
-                .findBySessionId(session.getId());
+        Optional<Session> optionalSession =
+                sessionRepository
+                        .findByClazz_IdAndStatus(
+                                classId,
+                                SessionStatus.OPEN
+                        );
+
+        List<AttendanceResponse> result = new ArrayList<>();
+
+        // não existe sessão aberta
+        if (optionalSession.isEmpty()) {
+
+            for (Student student : students) {
+
+                result.add(
+                        new AttendanceResponse(
+                                student.getId(),
+                                student.getName(),
+                                null,
+                                AttendanceStatus.ABSENT
+                        )
+                );
+            }
+
+            return ResponseEntity.ok(result);
+        }
+
+        // existe sessão aberta
+        Session session = optionalSession.get();
+
+        List<Attendance> attendances =
+                attendanceRepository
+                        .findBySessionId(session.getId());
 
         Map<Long, Attendance> map = attendances.stream()
                 .collect(Collectors.toMap(
@@ -109,16 +165,26 @@ public class AttendanceController {
                         a -> a
                 ));
 
-        List<AttendanceResponse> result = new ArrayList<>();
-
         for (Student student : students) {
 
-            if (map.containsKey(student.getId())) {
-                result.add(new AttendanceResponse(student.getId(),session.getId(),map.get(student.getId()).getStatus()));
-            } else {
-                result.add(new AttendanceResponse(student.getId(),session.getId(),AttendanceStatus.ABSENT));
-            }
+            Attendance attendance =
+                    map.get(student.getId());
+
+            AttendanceStatus status =
+                    attendance != null
+                            ? attendance.getStatus()
+                            : AttendanceStatus.ABSENT;
+
+            result.add(
+                    new AttendanceResponse(
+                            student.getId(),
+                            student.getName(),
+                            session.getId(),
+                            status
+                    )
+            );
         }
+
         return ResponseEntity.ok(result);
     }
 }

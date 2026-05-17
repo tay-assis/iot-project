@@ -14,6 +14,12 @@ export interface ClassModel {
 })
 export class ClassService {
 
+  getClass(classId: number) {
+     return this.http.get<ClassModel>(
+    `${this.apiUrl}/${classId}`
+  );
+  }
+
   private apiUrl = 'http://localhost:8080/classes';
 
   constructor(private http: HttpClient) {}

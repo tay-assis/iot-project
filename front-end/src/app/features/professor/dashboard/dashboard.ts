@@ -5,6 +5,7 @@ import { ClassService } from '../../../core/services/class';
 import { ClassModel } from '../../../core/models/class.model';
 import { ChangeDetectorRef } from '@angular/core';
 import { SessionService } from '../../../core/services/session';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +24,8 @@ export class Dashboard implements OnInit {
   constructor(
     private classService: ClassService,
     private cdr: ChangeDetectorRef,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -58,31 +60,37 @@ export class Dashboard implements OnInit {
 
   toggleClass(classe: ClassModel) {
 
-    if (!classe.active) {
-      // 🔥 iniciar aula
-      this.sessionService.startSession(classe.id)
-        .subscribe({
-          next: () => {
-            classe.active = true;
-          },
-          error: (err) => {
-            console.error(err);
-            alert('Erro ao iniciar aula');
-          }
-        });
+     this.router.navigate([
+    'professor/session',
+    classe.id
+  ]);
 
-    } else {
-      // 🔥 encerrar aula
-      this.sessionService.endSession()
-        .subscribe({
-          next: () => {
-            classe.active = false;
-          },
-          error: (err) => {
-            console.error(err);
-            alert('Erro ao encerrar aula');
-          }
-        });
-    }
+
+    // if (!classe.active) {
+    //   // 🔥 iniciar aula
+    //   this.sessionService.startSession(classe.id)
+    //     .subscribe({
+    //       next: () => {
+    //         classe.active = true;
+    //       },
+    //       error: (err) => {
+    //         console.error(err);
+    //         alert('Erro ao iniciar aula');
+    //       }
+    //     });
+
+    // } else {
+    //   // 🔥 encerrar aula
+    //   this.sessionService.endSession()
+    //     .subscribe({
+    //       next: () => {
+    //         classe.active = false;
+    //       },
+    //       error: (err) => {
+    //         console.error(err);
+    //         alert('Erro ao encerrar aula');
+    //       }
+    //     });
+    // }
   }
 }
