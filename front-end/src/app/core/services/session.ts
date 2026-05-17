@@ -12,17 +12,17 @@ export class SessionService {
 
   constructor(private http: HttpClient) {}
 
-  startSession(classId: number) {
+ startSession(classId: number) {
   return this.http.post(
     `${this.apiUrl}/start`,
     classId
   );
 }
 
-  endSession(): Observable<any> {
-    return this.http.post(
-      `${this.apiUrl}/end`,
-      {}
-    );
-  }
+endSession() {
+  return this.http.post(
+    `${this.apiUrl}/end`,
+    {}
+  );
+}
 }

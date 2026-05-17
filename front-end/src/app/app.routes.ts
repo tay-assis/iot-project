@@ -49,7 +49,7 @@ export const routes: Routes = [
         .then(m => m.Dashboard)
   },
   {
-  path: 'professor/session',
+  path: 'professor/session/:classId',
     loadComponent: () =>
       import('./features/professor/session/session')
         .then(m => m.Session)

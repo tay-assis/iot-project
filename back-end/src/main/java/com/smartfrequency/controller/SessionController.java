@@ -31,7 +31,7 @@ public class SessionController {
         if (openSession.isPresent()) {
             System.out.println("já tem uma sessão aberta");
             return ResponseEntity
-                    .status(400)
+                    .badRequest()
                     .body("Já existe uma sessão aberta");
         }
         ClassEntity classEntity = classRepository.getReferenceById(classId);

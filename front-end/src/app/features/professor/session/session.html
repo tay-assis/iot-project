@@ -3,19 +3,22 @@
   <header class="session-header">
 
     <div class="class-title">
-      {{ className }}
+      {{ classData.name }}
     </div>
 
     <button
-      class="session-button"
-      [class.end-button]="sessionActive"
-      (click)="sessionActive ? endSession() : startSession()"
-    >
-      {{ sessionActive ? 'Encerrar Aula' : 'Iniciar Aula' }}
-    </button>
+  class="session-button"
+  [class.end-button]="classData.active"
+  (click)="classData.active ? endSession() : startSession()"
+>
+  {{
+    classData.active
+      ? 'Encerrar Aula'
+      : 'Iniciar Aula'
+  }}
+</button>
 
   </header>
-
 
   <div class="students-section">
 
@@ -25,17 +28,24 @@
       class="student-row"
       *ngFor="let student of students"
     >
+
       <span>
-        {{ student.name }}
+        {{ student.studentName }}
       </span>
 
       <span
+        *ngIf="classData.active"
         class="status-badge"
-        [class.present]="student.present"
-        [class.absent]="!student.present"
+        [class.present]="student.status === 'PRESENT'"
+        [class.absent]="student.status !== 'PRESENT'"
       >
-        {{ student.present ? 'Presente' : 'Ausente' }}
+        {{
+          student.status === 'PRESENT'
+            ? 'Presente'
+            : 'Ausente'
+        }}
       </span>
+
     </div>
 
   </div>
@@ -56,28 +66,26 @@
     <div
       class="attendance-row"
       *ngFor="let student of students"
-      [class.present-row]="isPresent(student)"
-      [class.absent-row]="!isPresent(student)"
+      [class.present-row]="student.status === 'PRESENT'"
+      [class.absent-row]="student.status !== 'PRESENT'"
     >
 
       <div class="student-name">
-        {{ student.name }}
+        {{ student.studentName }}
       </div>
 
       <div>
 
-        <span *ngIf="student.present || student.manualPresence">
+        <span *ngIf="student.status === 'PRESENT'">
           Presente
         </span>
 
         <button
-          *ngIf="!student.present"
+          *ngIf="student.status !== 'PRESENT'"
           class="presence-button"
           (click)="toggleManualPresence(student)"
         >
-          {{ student.manualPresence
-            ? 'Remover presença'
-            : 'Marcar presente' }}
+          Marcar presente
         </button>
 
       </div>

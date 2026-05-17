@@ -1,9 +1,13 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit
-} from '@angular/core';
+import {ChangeDetectorRef,Component,OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { ClassModel } from '../../../core/models/class.model';
+import { ClassService } from '../../../core/services/class';
+import { AttendanceResponseDTO } from '../../../core/dto/attendance.response.dto';
+import { StudentService } from '../../../core/services/student';
+import { AttendanceService } from '../../../core/services/attendance';
+import { SessionService } from '../../../core/services/session';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-session',
@@ -15,77 +19,196 @@ import { CommonModule } from '@angular/common';
 })
 export class Session implements OnInit {
 
-  className = 'Engenharia de Software';
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private classService: ClassService,
+    private attendanceService: AttendanceService,
+    private sessionService: SessionService
+  ) {}
+
+  pollingSubscription?: Subscription;
+
+  ngOnInit(): void {
+    this.classId = Number(
+      this.route.snapshot.paramMap.get('classId'));
+    console.log(this.classId);
+
+      this.loadClass();
+  this.loadStudents();
+
+
+  }
+
+
+  classData: ClassModel= {
+    id: 0,
+    name: '',
+    active: false
+  };
+
+  classId!: number;
 
   sessionActive = false;
   showAttendanceModal = false;
 
-  students = [
-    {
-      id: 1,
-      name: 'Pedro',
-      present: true,
-      manualPresence: false
+  students: AttendanceResponseDTO[] = [];
+
+
+  toggleManualPresence(student: AttendanceResponseDTO): void {
+
+  const updatedStudent = {
+    ...student,
+    status: 'PRESENT'
+  };
+
+  this.attendanceService
+    .updateAttendance(updatedStudent)
+    .subscribe({
+
+      next: () => {
+
+        student.status = 'PRESENT';
+
+        this.cdr.detectChanges();
+      },
+
+      error: (err) => {
+        console.error(err);
+        alert('Erro ao atualizar presença');
+      }
+
+    });
+
+}
+
+
+  loadClass(): void {
+
+    this.classService
+    .getClass(this.classId)
+    .subscribe({
+      next: (data) => {
+
+        this.classData = data;
+
+        console.log(data);
+
+         if (this.classData.active) {
+          this.startPolling();
+        }
+        this.cdr.detectChanges();
+      },
+
+      error: (err) => {
+        console.error(err);
+      }
+
+    });
+
+  }
+
+  loadStudents(): void {
+
+  this.attendanceService
+     .getSessionAttendance(this.classId)
+  .subscribe({
+    next: (data) => {
+      this.students = data;
+      this.cdr.detectChanges();
     },
-    {
-      id: 2,
-      name: 'Stephane',
-      present: false,
-      manualPresence: false
-    },
-    {
-      id: 3,
-      name: 'Carlos',
-      present: true,
-      manualPresence: false
-    },
-    {
-      id: 4,
-      name: 'Amanda',
-      present: false,
-      manualPresence: false
-    }
-  ];
 
-  constructor(
-    private cdr: ChangeDetectorRef
-  ) {}
+      error: (err) => {
+        console.error(err);
+      }
 
-  ngOnInit(): void {}
+    });
 
-  startSession(): void {
-    this.sessionActive = true;
-    this.cdr.detectChanges();
-  }
+}
 
-  endSession(): void {
-    this.sessionActive = false;
-    this.showAttendanceModal = true;
-    this.cdr.detectChanges();
-  }
+startSession(): void {
 
-  toggleManualPresence(student: any): void {
-    student.manualPresence = !student.manualPresence;
-  }
+  this.sessionService
+    .startSession(this.classId)
+    .subscribe({
 
-  isPresent(student: any): boolean {
-    return student.present || student.manualPresence;
-  }
+      next: () => {
 
-  concludeAttendance(): void {
+        this.classData.active = true;
 
-    const finalAttendance = this.students.map(student => ({
-      id: student.id,
-      name: student.name,
-      present: this.isPresent(student)
-    }));
+        this.loadStudents();
 
-    console.log('Chamada final:', finalAttendance);
+        this.startPolling();
 
-    this.showAttendanceModal = false;
+        this.cdr.detectChanges();
+      },
 
-    alert('Chamada concluída');
+      error: (err) => {
 
-    this.cdr.detectChanges();
-  }
+        console.error(err);
+
+        if (err.status === 400) {
+          alert('Já existe outra sessão aberta');
+        } else {
+          alert('Erro ao iniciar sessão');
+        }
+      }
+
+    });
+
+}
+
+
+
+endSession(): void {
+
+  this.showAttendanceModal = true;
+
+}
+
+concludeAttendance(): void {
+
+  this.sessionService
+    .endSession()
+    .subscribe({
+
+      next: () => {
+
+        this.classData.active = false;
+
+        this.showAttendanceModal = false;
+
+        this.stopPolling();
+
+        this.cdr.detectChanges();
+      },
+
+      error: (err) => {
+
+        console.error(err);
+
+        alert('Erro ao encerrar sessão');
+      }
+
+    });
+
+}
+
+startPolling(): void {
+
+  this.pollingSubscription = interval(3000)
+    .subscribe(() => {
+
+      this.loadStudents();
+
+    });
+
+}
+
+stopPolling(): void {
+
+  this.pollingSubscription?.unsubscribe();
+
+}
+
 }
