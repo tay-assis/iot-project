@@ -17,6 +17,7 @@ yarn-error.log
 .classpath
 .c9/
 .vscode
+.angular
 *.launch
 .settings/
 *.sublime-workspace

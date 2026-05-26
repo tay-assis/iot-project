@@ -61,13 +61,4 @@ public class AuthController {
 
         return ResponseEntity.ok(new LoginResponse(token,role));
     }
-    @PostMapping("/registerProfessor")
-    public ResponseEntity registerProfessor(@RequestBody @Valid ProfessorRegisterRequestDTO professorRegisterRequestDTO){
-        if(professorRepository.findByEmail(professorRegisterRequestDTO.email()) != null){
-            return ResponseEntity.badRequest().build();
-        }
-        Professor professor = new Professor(professorRegisterRequestDTO);
-        professorRepository.save(professor);
-        return ResponseEntity.ok().build();
-    }
 }

@@ -1,10 +1,15 @@
 package com.smartfrequency.model;
 
+import com.smartfrequency.dto.ClassRegisterRequestDTO;
+import com.smartfrequency.repository.ProfessorRepository;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 @Entity
 @Table(name = "classes")
 public class ClassEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

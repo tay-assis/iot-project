@@ -2,10 +2,10 @@
 
   <app-ui-select
     label="Aluno"
-    [options]="alunos"
+    [options]="students"
     displayKey="name"
     valueKey="id"
-    (valueChange)="alunoId = +$event"
+    (valueChange)="enrollment.studentId = +$event"
   ></app-ui-select>
 
   <app-ui-select
@@ -13,7 +13,7 @@
     [options]="classes"
     displayKey="name"
     valueKey="id"
-    (valueChange)="classeId = +$event"
+    (valueChange)="enrollment.classId = +$event"
   ></app-ui-select>
 
   <button (click)="submit()">Matricular</button>
