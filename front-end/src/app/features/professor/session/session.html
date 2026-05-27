@@ -7,16 +7,16 @@
     </div>
 
     <button
-  class="session-button"
-  [class.end-button]="classData.active"
-  (click)="classData.active ? endSession() : startSession()"
->
-  {{
-    classData.active
-      ? 'Encerrar Aula'
-      : 'Iniciar Aula'
-  }}
-</button>
+      class="session-button"
+      [class.end-button]="classData.active"
+      (click)="classData.active ? endSession() : startSession()"
+    >
+      {{
+        classData.active
+          ? 'Encerrar Aula'
+          : 'Iniciar Aula'
+      }}
+    </button>
 
   </header>
 
@@ -49,6 +49,15 @@
     </div>
 
   </div>
+
+  <header class="session-header2">
+      <button
+        class="pdf-button"
+        (click)="generatePdf()"
+      >
+        Gerar PDF
+      </button>
+  </header>
 
 </div>
 

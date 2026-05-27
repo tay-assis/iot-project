@@ -19,6 +19,13 @@ body {
   margin-bottom: 32px;
 }
 
+.session-header2 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 32px;
+}
+
 .class-title {
   font-size: 28px;
   font-weight: 700;
@@ -144,4 +151,24 @@ body {
   cursor: pointer;
   background: #16a34a;
   color: white;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.pdf-button {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #059669;
+  color: white;
+  transition: 0.2s;
+}
+
+.pdf-button:hover {
+  opacity: 0.9;
 }

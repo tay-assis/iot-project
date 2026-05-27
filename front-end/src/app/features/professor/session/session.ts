@@ -211,4 +211,18 @@ stopPolling(): void {
 
 }
 
+generatePdf(): void {
+
+  const pdfUrl = 'pdfs/chamada.pdf';
+
+  const link = document.createElement('a');
+
+  link.href = pdfUrl;
+
+  link.download = 'chamada.pdf';
+
+  link.click();
+
+}
+
 }
